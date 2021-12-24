@@ -1,0 +1,69 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:bottom="@dimen/marge_case_selectionnee_5"
+        android:left="@dimen/marge_case_selectionnee_5"
+        android:right="@dimen/marge_case_selectionnee_5"
+        android:top="@dimen/marge_case_selectionnee_5">
+        <shape>
+            <solid android:color="@color/couleur_halo" />
+            <corners android:radius="@dimen/radius_case" />
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/marge_case_selectionnee_4"
+        android:left="@dimen/marge_case_selectionnee_4"
+        android:right="@dimen/marge_case_selectionnee_4"
+        android:top="@dimen/marge_case_selectionnee_4">
+        <shape>
+            <solid android:color="@color/couleur_halo" />
+            <corners android:radius="@dimen/radius_case" />
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/marge_case_selectionnee_3"
+        android:left="@dimen/marge_case_selectionnee_3"
+        android:right="@dimen/marge_case_selectionnee_3"
+        android:top="@dimen/marge_case_selectionnee_3">
+        <shape>
+            <solid android:color="@color/couleur_halo" />
+            <corners android:radius="@dimen/radius_case" />
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/marge_case_selectionnee_2"
+        android:left="@dimen/marge_case_selectionnee_2"
+        android:right="@dimen/marge_case_selectionnee_2"
+        android:top="@dimen/marge_case_selectionnee_2">
+        <shape>
+            <solid android:color="@color/couleur_halo" />
+            <corners android:radius="@dimen/radius_case" />
+        </shape>
+    </item>
+
+    <item
+        android:bottom="@dimen/marge_case_selectionnee_1"
+        android:left="@dimen/marge_case_selectionnee_1"
+        android:right="@dimen/marge_case_selectionnee_1"
+        android:top="@dimen/marge_case_selectionnee_1">
+        <shape>
+            <solid android:color="@color/couleur_halo" />
+            <corners android:radius="@dimen/radius_case" />
+        </shape>
+    </item>
+
+    <item
+        android:bottom="@dimen/marge_case"
+        android:left="@dimen/marge_case"
+        android:right="@dimen/marge_case"
+        android:top="@dimen/marge_case">
+        <shape
+            android:shape="rectangle"
+            android:thickness="25dp">
+            <solid android:color="@color/couleurFondIconeSelectionnee" />
+            <corners android:radius="@dimen/radius_case" />
+        </shape>
+
+    </item>
+
+</layer-list>

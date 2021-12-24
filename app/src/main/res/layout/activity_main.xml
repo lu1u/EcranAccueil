@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:animateLayoutChanges="true"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_selected"
+    tools:context=".MainActivity">
+
+    <com.lpi.ecrandaccueil.customviews.AnimationView
+        android:id="@+id/animationView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#0000"
+        app:AnimDistanceMax="10"
+        app:AnimDistanceMin="1"
+        app:AnimFlocon1="@drawable/snowflake"
+        app:AnimFlocon2="@drawable/snowflake2"
+        app:AnimNB="400"
+        app:AnimTaille="60dp"
+        app:AnimVitesseMax="60"
+        app:AnimVitesseMin="40"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/padding"
+        android:indeterminate="true"
+        android:indeterminateBehavior="cycle"
+        android:indeterminateDuration="200"
+        android:padding="@dimen/padding"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButtonSettings"
+
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/fond_bouton"
+        android:contentDescription="@string/bouton_settings"
+        android:nextFocusDown="@id/listeApplications"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_settings" />
+
+    <com.lpi.ecrandaccueil.customviews.ListeApplicationsView
+        android:id="@+id/listeApplications"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:focusable="auto"
+        android:focusableInTouchMode="true"
+        android:focusedByDefault="true"
+        android:longClickable="true"
+        android:nextFocusUp="@id/imageButtonSettings"
+        android:padding="@dimen/padding"
+        app:ListeDelaiAnimation="200"
+        app:ListeDrawableFondCase="@drawable/case_fond"
+        app:ListeDrawableFondCaseSelectionnee="@drawable/case_fond_selectionne"
+        app:ListeIndicateurDroite="@drawable/right"
+        app:ListeIndicateurGauche="@drawable/left"
+        app:ListeMargeIcone="@dimen/marge_icone"
+        app:ListeMargeX="@dimen/marge_icone"
+        app:ListeNbParLigne="4"
+        app:ListeTexteCouleur="@color/white"
+        app:ListeTexteTaille="16dp"
+        app:ListeRatioSelection="1.1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+</androidx.constraintlayout.widget.ConstraintLayout>

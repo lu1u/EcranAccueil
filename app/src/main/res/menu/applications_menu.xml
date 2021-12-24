@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <group
+        android:id="@+id/group1">
+        <item
+            android:id="@+id/action_associer"
+            android:title="Associer à une touche"
+            android:visible="false" />
+        <item
+            android:id="@+id/action_debut"
+            android:title="Envoyer au début" />
+        <item
+            android:id="@+id/action_fin"
+            android:title="Envoyer à la fin" />
+        <item
+            android:id="@+id/action_cacher"
+            android:title="Cacher cette application" />
+    </group>
+
+</menu>

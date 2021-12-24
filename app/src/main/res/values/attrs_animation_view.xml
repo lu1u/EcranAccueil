@@ -1,0 +1,13 @@
+<resources>
+    <declare-styleable name="AnimationView">
+        <attr name="AnimNB" format="integer" />
+        <attr name="AnimTaille" format="dimension" />
+        <attr name="AnimDistanceMin" format="float"/>
+        <attr name="AnimDistanceMax" format="float"/>
+        <attr name="AnimVitesseMin" format="float"/>
+        <attr name="AnimVitesseMax" format="float"/>
+
+        <attr name="AnimFlocon1" format="reference" />
+        <attr name="AnimFlocon2" format="reference" />
+    </declare-styleable>
+</resources>

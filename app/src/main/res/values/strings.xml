@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Ecran d\'accueil</string>
+    <string name="accessibility_service_label">@string/app_name</string>
+    <string name="accessibility_service_description">Service pour Ecran d\'accueil</string>
+    <string name="messagebox_titre_cacher">Cacher</string>
+    <string name="messagebox_cacher">"Voulez-vous cacher l\'application \"%1$s\"?\nL\'application ne sera pas désinstallée, juste supprimée de cette liste."</string>
+    <string name="message_application_cachee">"Application \"%1$s\" cachée"</string>
+    <string name="ui_a_propos_icones">Icônes tirées de https://materialdesignicons.com/</string>
+    <string name="ui_a_propos_code">Quelques morceaux de code de https://stackoverflow.com/</string>
+    <string name="message_application_fin">"Application \"%1$s\" envoyée à la fin"</string>
+    <string name="message_application_debut">"Application \"%1$s\" envoyée au début"</string>
+    <string name="bouton_settings">Paramètres</string>
+</resources>

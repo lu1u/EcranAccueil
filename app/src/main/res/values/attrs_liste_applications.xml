@@ -1,0 +1,15 @@
+<resources>
+    <declare-styleable name="ListeApplicationsView">
+            <attr name="ListeNbParLigne" format="integer"/>
+            <attr name="ListeDrawableFondCase" format="reference" />
+            <attr name="ListeDrawableFondCaseSelectionnee" format="reference" />
+            <attr name="ListeMargeIcone" format="dimension" />
+            <attr name="ListeMargeX" format="dimension" />
+            <attr name="ListeTexteTaille" format="dimension" />
+            <attr name="ListeTexteCouleur" format="color"/>
+            <attr name="ListeIndicateurDroite" format="reference"/>
+            <attr name="ListeIndicateurGauche" format="reference"/>
+            <attr name="ListeDelaiAnimation" format="integer"/>
+            <attr name="ListeRatioSelection" format="float"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="marge_icone">16dp</dimen>
+    <dimen name="radius_case">8dp</dimen>
+
+    <dimen name="marge_case">6px</dimen>
+    <dimen name="marge_case_selectionnee_1">8px</dimen>
+    <dimen name="marge_case_selectionnee_2">6px</dimen>
+    <dimen name="marge_case_selectionnee_3">4px</dimen>
+    <dimen name="marge_case_selectionnee_4">2px</dimen>
+    <dimen name="marge_case_selectionnee_5">0px</dimen>
+    <dimen name="padding">96dp</dimen>
+    <dimen name="hauteur_liste_media">96dp</dimen>
+
+    <dimen name="hauteur_icone">180dp</dimen>
+    <dimen name="largeur_icone">180dp</dimen>
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_son"
+        android:checkable="true"
+        android:title="Son" />
+    <item
+        android:id="@+id/menu_animations"
+        android:checkable="true"
+        android:title="Animations" />
+    <item
+        android:id="@+id/menu_parametres"
+        android:title="Paramètres système" />
+    <item
+            android:id="@+id/menu_relire"
+            android:title="Relire les applications" />
+    <item
+    android:id="@+id/menu_a_propos"
+    android:title="A propos..." />
+</menu>
