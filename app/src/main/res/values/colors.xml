@@ -1,47 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    <color name="primary">#F44336</color>
-        <color name="primaryLight">#E57373</color>
-        <color name="primaryDark">#D32F2F</color>
-        <color name="primaryDarkDark">#B71C1C</color>
-        <color name="secondary">#388E3C</color>
-        <color name="secondaryLight">#81C784</color>
-        <color name="couleur_halo">#4481C784</color>
-        <color name="couleur_inteur">#aaF44336</color>
-
-    <color name="primary">#4CAF50</color>
-    <color name="primaryLight">#81C784</color>
-    <color name="primaryDark">#388E3C</color>
-    <color name="primaryDarkDark">#1B5E20</color>
-    <color name="secondary">#F44336</color>
-    <color name="secondaryLight">#E57373</color>
-    <color name="secondaryDark">#D32F2F</color>
-    <color name="secondaryDarkDark">#B71C1C</color>
-
-    <color name="couleur_halo">#224CAF50</color>
-    <color name="couleur_indicateur">#aa4CAF50</color>
-    <color name="couleurFondIcone">@color/secondary</color>
-    -->    <color name="couleurFondIconeSelectionnee">@color/secondary</color>
-
-
     <color name="primary">#2196F3</color>
     <color name="primaryLight">#64B5F6</color>
     <color name="primaryDark">#1565C0</color>
-    <color name="primaryDarkDark">#0D47A1</color>
     <color name="secondary">#FFC107</color>
     <color name="secondaryLight">#FFD54F</color>
-    <color name="secondaryDark">#FFA000</color>
-    <color name="secondaryDarkDark">#FF6F00</color>
-    <color name="couleur_halo">#44FFC107</color>
+    <color name="couleurFondIconeSelectionnee">@color/secondary</color>
+    <color name="couleur_halo">#18FFC107</color>
     <color name="couleur_indicateur">#aa2196F3</color>
     <color name="couleurFondIcone">@color/primary</color>
 
-    <color name="bouton_settings">#4000</color>
+    <color name="bouton_settings">#0000</color>
 
+    <color name="couleurScrollbarStroke">#cfff</color>
+    <color name="couleurScrollbarSolid">#afff</color>
     <color name="white">#fff</color>
     <color name="light_blue_400">#FF29B6F6</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
-    <color name="couleurFondListeFichiers">#8000</color>
 </resources>

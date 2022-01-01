@@ -10,7 +10,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,25 +33,28 @@ import com.lpi.ecrandaccueil.sound.SoundManager;
  */
 public class ListeApplicationsView extends View
 {
-	private static final String TAG = "TVLauncher:ListeApplication";
-	private Drawable _indicateurGauche;
-	private Drawable _indicateurDroite;
+	public static final int NB_MIN_ICONES = 3;
+	public static final int NB_MAX_ICONES = 8;
+	private @Nullable Drawable _indicateurGauche;
+	private @Nullable Drawable _indicateurDroite;
 	float _largeurCase = 200;
 	float _hauteurCase = 150;
 	float _margeIcone = 10;
 	float _margeX = 10;
-	float _tailleTexte = 10;
 	int _couleurTexte;
 	int _delaiAnimation = 100;
 
 	private int _selectionnee = 0;
-	//private String _message = "Ecran d'accueil";
-
 	ApplicationList _applications;
+
+	// Scrollbar
+	private Drawable _scrollbarVide, _scrollbarPlein;
+	private float _tailleScrollbar;
 
 	// Tailles, marges, mesures...
 	private int _paddingLeft;
 	private int _paddingTop;
+	private int _paddingBottom;
 	private int _paddingRight;
 	private int _contentWidth;
 	private int _contentHeight;
@@ -68,10 +70,16 @@ public class ListeApplicationsView extends View
 	public ListeApplicationListener _listener;
 	private boolean _animationLancementEnCours = false;
 
+	public void reinitAttributs()
+	{
+		_nbParRangee = Preferences.getInstance(getContext()).getInt(Preferences.PREF_NB_ICONES_PAR_RANGEE, _nbParRangee);
+		calculeTailles();
+		invalidate();
+	}
+
 	public interface ListeApplicationListener
 	{
 		void onOpenMenu();
-		void initialisationTerminee();
 	}
 
 	public void setListener(ListeApplicationListener listener)
@@ -83,21 +91,21 @@ public class ListeApplicationsView extends View
 	{
 		super(context);
 		init(null, 0);
-		initApplications();
+		if (isInEditMode()) initApplications();
 	}
 
 	public ListeApplicationsView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		init(attrs, 0);
-		initApplications();
+		if (isInEditMode()) initApplications();
 	}
 
 	public ListeApplicationsView(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
 		init(attrs, defStyle);
-		initApplications();
+		if (isInEditMode()) initApplications();
 	}
 
 	public static Drawable loadDrawable(final @NonNull TypedArray a, final int id)
@@ -108,54 +116,49 @@ public class ListeApplicationsView extends View
 			r.setCallback(null);
 			return r;
 		}
-
 		return null;
 	}
 
-	private void initApplications()
+	/***
+	 * Lecture de la liste des applications installées
+	 */
+	public void initApplications()
 	{
-		new Thread(() ->
+		try
 		{
-			try
+			Preferences.getInstance(getContext()); // Pour initialiser le singleton
+			_applications = new ApplicationList();
+			if (isInEditMode())
 			{
-				Preferences.getInstance(getContext()); // Pour initialiser le singleton
-				ApplicationList.ListeListener listener = () ->
+				// Ajouter artificiellement quelques applications bidon est mode Design
+				Drawable r = ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.icone, getContext().getTheme());
+				if (r != null)
 				{
-					Log.d(TAG, "onListeChanged " + _applications.getNb());
-					if (_selectionnee >= _applications.getNb())
-						_selectionnee = _applications.getNb() - 1;
-					invalidate();
-					if (_listener != null)
-						_listener.initialisationTerminee();
-				};
-
-				_applications = new ApplicationList(listener);
-				if (isInEditMode())
-				{
-					// Ajouter artificiellement quelques applications bidon est mode Design
-					Drawable r = ResourcesCompat.getDrawable( getContext().getResources(), R.drawable.icone, getContext().getTheme());
-					if ( r!=null)
-					{
-						r.setCallback(null);
-						r.setTint(Color.WHITE);
-						for (int i = 0; i < 10; i++)
-							_applications.ajoute(new ApplicationInstallee("Application " + i, "package." + i, r, i));
-					}
+					r.setCallback(null);
+					r.setTint(Color.WHITE);
+					for (int i = 0; i < 10; i++)
+						_applications.ajoute(new ApplicationInstallee("Application " + i, "package." + i, r));
 				}
-				else
-					_applications.litApplications(getContext(), false);
-
-				calculeTailles();
-				invalidate();
-
-			} catch (Exception e)
-			{
-				e.printStackTrace();
 			}
-		}).start();
+			else
+				_applications.litApplications(getContext(), false);
 
+			if (_selectionnee >= _applications.getNb())
+				_selectionnee = _applications.getNb() - 1;
+			calculeTailles();
+			invalidate();
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
+	/***
+	 * Initialisation des attributes de la customview
+	 * @param attrs
+	 * @param defStyle
+	 */
 	private void init(AttributeSet attrs, int defStyle)
 	{
 		try
@@ -168,12 +171,18 @@ public class ListeApplicationsView extends View
 			final Drawable fondCaseSelectionnee = loadDrawable(a, R.styleable.ListeApplicationsView_ListeDrawableFondCaseSelectionnee);
 			_indicateurGauche = loadDrawable(a, R.styleable.ListeApplicationsView_ListeIndicateurGauche);
 			_indicateurDroite = loadDrawable(a, R.styleable.ListeApplicationsView_ListeIndicateurDroite);
+
+			// Scrollbar
+			_scrollbarPlein = loadDrawable(a, R.styleable.ListeApplicationsView_ListeDrawableScrollbarPlein);
+			_scrollbarVide = loadDrawable(a, R.styleable.ListeApplicationsView_ListeDrawableScrollbarVide);
+			_tailleScrollbar = a.getDimension(R.styleable.ListeApplicationsView_ListeDrawableScrollbarTaille, 5);
+
 			_nbParRangee = a.getInt(R.styleable.ListeApplicationsView_ListeNbParLigne, _nbParRangee);
+			_nbParRangee = Preferences.getInstance(getContext()).getInt(Preferences.PREF_NB_ICONES_PAR_RANGEE, _nbParRangee);
 			_delaiAnimation = a.getInt(R.styleable.ListeApplicationsView_ListeDelaiAnimation, _delaiAnimation);
 			float ratioSelection = a.getFloat(R.styleable.ListeApplicationsView_ListeRatioSelection, 1.1f);
 			_margeIcone = a.getDimension(R.styleable.ListeApplicationsView_ListeMargeIcone, _margeIcone);
 			_margeX = a.getDimension(R.styleable.ListeApplicationsView_ListeMargeX, _margeX);
-			_tailleTexte = a.getDimension(R.styleable.ListeApplicationsView_ListeTexteTaille, _tailleTexte);
 			_couleurTexte = a.getColor(R.styleable.ListeApplicationsView_ListeTexteCouleur, Color.WHITE);
 
 			_attributs = new ApplicationInstallee.AttributsGraphiques();
@@ -184,14 +193,6 @@ public class ListeApplicationsView extends View
 			_attributs.margeIcone = (int) _margeIcone;
 			_attributs.hauteurTexteMax = _margeIcone;
 			_attributs.ratioSelection = ratioSelection;
-
-			// Set up a default TextPaint object
-			final TextPaint textPaint = new TextPaint();
-			textPaint.setColor(_couleurTexte);
-			textPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
-			textPaint.setTextAlign(Paint.Align.LEFT);
-			textPaint.setTextSize(_tailleTexte);
-
 			calculeTailles();
 
 			setOnLongClickListener(view ->
@@ -219,6 +220,7 @@ public class ListeApplicationsView extends View
 	{
 		_paddingLeft = getPaddingLeft();
 		_paddingTop = getPaddingTop();
+		_paddingBottom = getPaddingBottom();
 		_paddingRight = getPaddingRight();
 		final int paddingBottom = getPaddingBottom();
 
@@ -242,7 +244,7 @@ public class ListeApplicationsView extends View
 		float y = _paddingTop + (_contentHeight - _hauteurCase) / 2;
 		boolean depasseAGauche = (decalageADessiner < 0);
 		boolean depasseADroite = false;
-		_attributs.focus = hasFocus();
+		_attributs.focus = hasFocus() || isInEditMode();
 
 		for (int i = 0; i < nbApplis; i++)
 		{
@@ -253,8 +255,7 @@ public class ListeApplicationsView extends View
 			}
 
 			if (x + _largeurCase > _paddingLeft)
-				_applications.affiche(canvas, i, x + _margeIcone, y + _margeIcone, _largeurCase - (_margeIcone * 2), _hauteurCase - (_margeIcone * 2),
-						i == _selectionnee, _attributs);
+				_applications.get(i).affiche(canvas, x + _margeIcone, y + _margeIcone, _largeurCase - (_margeIcone * 2), _hauteurCase - (_margeIcone * 2),i == _selectionnee, _attributs);
 			x += _largeurCase + _margeX;
 		}
 
@@ -266,7 +267,30 @@ public class ListeApplicationsView extends View
 			// Afficher l'indicateur "depassement a droite
 			drawDrawable(canvas, getRight() - _paddingRight, y, _paddingRight, _hauteurCase, _indicateurDroite);
 
+		if (depasseADroite || depasseAGauche)
+			afficheScrollbar(canvas);
 		afficheAnimationLancement(canvas);
+	}
+
+	/***
+	 * Affiche une scrollbar
+	 * @param canvas
+	 */
+	private void afficheScrollbar(final Canvas canvas)
+	{
+		final int nbPoints = _applications.getNb();
+		final float ecartX = _contentWidth / (float)nbPoints;
+		final float Y = getHeight() - _paddingBottom - _tailleScrollbar;
+		float X = _paddingLeft + (ecartX - _tailleScrollbar) / 2.0f;
+
+		int premiere = (int) (-_decalage / (_largeurCase + _margeX));
+		int derniere = premiere + _nbParRangee - 1;
+
+		for (int i = 0; i < nbPoints; i++)
+		{
+			drawDrawable(canvas, X, Y, _tailleScrollbar, _tailleScrollbar, (i >= premiere) && (i <= derniere) ? _scrollbarPlein : _scrollbarVide);
+			X += ecartX;
+		}
 	}
 
 	/***
@@ -283,7 +307,7 @@ public class ListeApplicationsView extends View
 		float taille = _hauteurCase + (getHeight() - _hauteurCase) * _fractionAnimationLancement;
 
 		Drawable d = _applications.get(_selectionnee).getIcone();
-		if ( d !=null)
+		if (d != null)
 		{
 			d.setAlpha((int) (255.0f * (1.0f - _fractionAnimationLancement)));
 			drawDrawable(canvas, centreX - taille / 2.0f, centreY - taille / 2.0f, taille, taille, _applications.get(_selectionnee).getIcone());
@@ -631,6 +655,7 @@ public class ListeApplicationsView extends View
 		Toast.makeText(getContext(), getContext().getString(R.string.message_application_fin, app.getNom()), Toast.LENGTH_SHORT).show();
 	}
 
+
 	public void reinitApplications()
 	{
 		_applications.litApplications(getContext(), true);
@@ -667,6 +692,8 @@ public class ListeApplicationsView extends View
 			envoieALaFin();
 		else if (itemId == R.id.action_cacher)
 			cacheApplication();
+
 	}
+
 }
 

@@ -10,4 +10,7 @@
     <item android:duration="5000"
         android:drawable="@drawable/background3"/>
 
+    <item android:duration="5000"
+        android:drawable="@drawable/background2"/>
+
 </animation-list>

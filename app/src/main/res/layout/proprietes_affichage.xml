@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:background="@drawable/fond_dialogue"
+android:padding="@dimen/marge_icone">
+
+<ImageView
+    android:id="@+id/imageIconeAppli"
+    android:layout_width="@dimen/taille_icone"
+    android:layout_height="@dimen/taille_icone"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/icone" />
+
+<TextView
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:text="Affichage"
+    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    app:layout_constraintStart_toEndOf="@+id/imageIconeAppli"
+    app:layout_constraintTop_toTopOf="@+id/imageIconeAppli" />
+
+    <CheckBox
+        android:id="@+id/cbAnimations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:checked="false"
+        android:focusable="auto"
+        android:focusableInTouchMode="true"
+        android:nextFocusLeft="@id/editNumberDPad"
+        android:nextFocusRight="@id/editNumberDPad"
+        android:nextFocusUp="@id/editNumberDPad"
+        android:nextFocusDown="@id/editNumberDPad"
+        android:text="Animations"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Nombre d'icones:"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/cbAnimations" />
+
+    <com.lpi.ecrandaccueil.customviews.EditNumberDPad
+        android:id="@+id/editNumberDPad"
+        android:layout_width="64dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/fond_edit"
+        android:focusable="auto"
+        android:focusableInTouchMode="true"
+        android:nextFocusLeft="@id/editNumberDPad"
+        android:nextFocusRight="@id/editNumberDPad"
+        android:nextFocusUp="@id/cbAnimations"
+        android:nextFocusDown="@id/cbAnimations"
+        app:ENDPCouleur="@color/primary"
+        app:ENDPCouleurSelectionnee="@color/secondary"
+        app:ENDPDroite="@drawable/right"
+        app:ENDPGauche="@drawable/left"
+        app:ENDPMax="7"
+        app:ENDPMin="2"
+        app:ENDPtailleTexte="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/textView2"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

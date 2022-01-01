@@ -12,13 +12,14 @@ public class Preferences
 {
 	public static final String PREF_VOLUME = "Volume";
 	public static final String PREF_ANIMATIONS = "Animations";
+	public static final String PREF_NB_ICONES_PAR_RANGEE = "Nb Icones par rangee";
 	private static final String PREFERENCES = Preferences.class.getName();
 	public static final String PREF_DECALAGE = "Decalage";
 	public static final String PREF_NB_LANCEMENTS = "NbLancements ";
 	public static final String PREF_CACHEE = "Cachee ";
 	public static final String SEPARATEUR = " ";
 
-	private static Preferences _instance;
+	private @Nullable static Preferences _instance;
 	@NonNull final SharedPreferences settings;
 	@NonNull final SharedPreferences.Editor editor;
 
@@ -36,6 +37,10 @@ public class Preferences
 		return _instance;
 	}
 
+	/***
+	 * Constructeur privé, utilisable uniquement dans getInstance
+	 * @param context
+	 */
 	private Preferences(final @NonNull Context context)
 	{
 		settings = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);

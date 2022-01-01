@@ -29,14 +29,14 @@ public class AnimationView extends View
 
 	private static class Flocon
 	{
-		public float distance ;
+		public float distance;
 		public float x, y;
 		public float vx, vy;
 		public float taille;
 		public int type;
 	}
 
-	public @NonNull Drawable[] _images= new Drawable[2];
+	public @NonNull final Drawable[] _images = new Drawable[2];
 
 	private Flocon[] _flocons;
 	private long _derniereFrame;
@@ -59,12 +59,12 @@ public class AnimationView extends View
 		VITESSE_MAX = a.getFloat(R.styleable.AnimationView_AnimVitesseMax, 60);
 
 		_images[0] = ListeApplicationsView.loadDrawable(a, R.styleable.AnimationView_AnimFlocon1);
-		_images[0].setTint(Color.argb(128,255,255,255));
+		if (_images[0] != null) _images[0].setTint(Color.argb(128, 255, 255, 255));
 		_images[1] = ListeApplicationsView.loadDrawable(a, R.styleable.AnimationView_AnimFlocon2);
-		_images[1].setTint(Color.argb(128,255,255,255));
+		if (_images[1] != null) _images[1].setTint(Color.argb(128, 255, 255, 255));
+
 		a.recycle();
 	}
-
 
 	public AnimationView(Context context, AttributeSet attrs)
 	{
@@ -82,39 +82,40 @@ public class AnimationView extends View
 	protected void onDraw(Canvas canvas)
 	{
 		super.onDraw(canvas);
-		if ( _flocons==null)
+		if (_flocons == null)
 			return;
 
-		int hauteur = getHeight();
-		int largeur = getWidth();
+		final int hauteur = getHeight();
+		final int largeur = getWidth();
 
 		_r = new Random(_derniereFrame);
 		long maintenant = System.currentTimeMillis();
-		float dt = (float)(maintenant-_derniereFrame) /1000.0f;
-		for ( Flocon f : _flocons)
+		final float deltaT = (float) (maintenant - _derniereFrame) / 1000.0f;
+
+		for (Flocon f : _flocons)
 		{
 			// Bouge le flocon
-			f.x += f.vx * dt;
-			f.y += f.vy * dt;
+			f.x += f.vx * deltaT;
+			f.y += f.vy * deltaT;
 
 			// flocon en bas de l'ecran?
-			while ( f.y > hauteur)
+			while (f.y > hauteur)
 				f.y -= hauteur + f.taille;
 
 			// Flocon qui deborde a droite ou a gauche?
-			while ( f.x > largeur)
+			while (f.x > largeur)
 				f.x -= largeur - f.taille;
 
-			while ( f.x + f.taille< 0)
-				f.x += largeur ;
+			while (f.x + f.taille < 0)
+				f.x += largeur;
 
-			f.vx += floatRandom(_r, -MAX_V_H, MAX_V_H)*dt / f.distance ;
-			if ( f.vx > MAX_V_H)
+			f.vx += floatRandom(_r, -MAX_V_H, MAX_V_H) * deltaT / f.distance;
+			if (f.vx > MAX_V_H)
 				f.vx = MAX_V_H;
 			if (f.vx < -MAX_V_H)
-				f.vx = - MAX_V_H;
+				f.vx = -MAX_V_H;
 
-			_images[f.type].setBounds((int)f.x, (int)f.y, (int)(f.x +f.taille), (int)(f.y + f.taille));
+			_images[f.type].setBounds((int) f.x, (int) f.y, (int) (f.x + f.taille), (int) (f.y + f.taille));
 			_images[f.type].draw(canvas);
 		}
 
@@ -132,6 +133,7 @@ public class AnimationView extends View
 		{
 			try
 			{
+				// Attend un certain temps
 				Thread.sleep(50);
 			} catch (InterruptedException e)
 			{
@@ -151,11 +153,11 @@ public class AnimationView extends View
 	@Override protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh)
 	{
 		super.onSizeChanged(w, h, oldw, oldh);
-		creerFlocons(w,h);
+		creerFlocons(w, h);
 	}
 
 	/***
-	 * Creer la liste des flocons
+	 * Créer la liste des flocons
 	 * @param largeur
 	 * @param hauteur
 	 */
@@ -163,23 +165,23 @@ public class AnimationView extends View
 	{
 		_r = new Random(_derniereFrame);
 		_flocons = new Flocon[NB];
-		for ( int i = 0; i < NB;i++)
+		for (int i = 0; i < NB; i++)
 		{
 			_flocons[i] = new Flocon();
 			_flocons[i].distance = floatRandom(_r, DISTANCE_MIN, DISTANCE_MAX);
 			_flocons[i].x = _r.nextInt(largeur);
 			_flocons[i].y = _r.nextInt(hauteur);
-			_flocons[i].vx = floatRandom( _r, -MAX_V_H, MAX_V_H)/ _flocons[i].distance;
-			_flocons[i].vy = floatRandom( _r, VITESSE_MIN, VITESSE_MAX)/ _flocons[i].distance;
+			_flocons[i].vx = floatRandom(_r, -MAX_V_H, MAX_V_H) / _flocons[i].distance;
+			_flocons[i].vy = floatRandom(_r, VITESSE_MIN, VITESSE_MAX) / _flocons[i].distance;
 			_flocons[i].type = _r.nextInt(_images.length);
-			_flocons[i].taille = TAILLE/ _flocons[i].distance;
+			_flocons[i].taille = TAILLE / _flocons[i].distance;
 		}
 
 		_derniereFrame = System.currentTimeMillis();
 	}
 
 	/***
-	 * Calcule un nombre flottant aleatoire compris entre deux bornes
+	 * Calcule un nombre flottant aléatoire compris entre deux bornes
 	 * @param r
 	 * @param min
 	 * @param max
@@ -187,6 +189,6 @@ public class AnimationView extends View
 	 */
 	private float floatRandom(final @NonNull Random r, final float min, final float max)
 	{
-		return min + (r.nextFloat() * (max-min));
+		return min + (r.nextFloat() * (max - min));
 	}
 }

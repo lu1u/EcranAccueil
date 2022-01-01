@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/fond_dialogue"
+    android:padding="@dimen/marge_icone">
+
+    <ImageView
+        android:id="@+id/imageIconeAppli"
+        android:layout_width="@dimen/taille_icone"
+        android:layout_height="@dimen/taille_icone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icone" />
+
+    <TextView
+        android:id="@+id/tvNomAppli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/imageIconeAppli"
+        app:layout_constraintStart_toEndOf="@+id/imageIconeAppli"
+        app:layout_constraintTop_toTopOf="@+id/imageIconeAppli" />
+
+    <TextView
+        android:id="@+id/tvPackageName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/tvNomAppli"
+        app:layout_constraintTop_toBottomOf="@+id/tvNomAppli" />
+
+    <TextView
+        android:id="@+id/tvNbLancements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/tvNomAppli"
+        app:layout_constraintTop_toBottomOf="@+id/tvPackageName" />
+
+    <TextView
+        android:id="@+id/tvVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPackageName"
+        app:layout_constraintStart_toEndOf="@+id/tvPackageName"
+        app:layout_constraintTop_toTopOf="@+id/tvPackageName" />
+
+    <Button
+        android:id="@+id/buttonProprietes"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:background="@drawable/fond_bouton"
+        android:focusableInTouchMode="true"
+        android:text="@string/bouton_proprietes_systeme"
+        android:textAllCaps="false"
+        android:textColor="@color/secondary"
+        app:layout_constraintStart_toStartOf="@+id/tvNomAppli"
+        app:layout_constraintTop_toBottomOf="@+id/tvNbLancements" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

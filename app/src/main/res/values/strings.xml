@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Ecran d\'accueil</string>
+
     <string name="accessibility_service_label">@string/app_name</string>
-    <string name="accessibility_service_description">Service pour Ecran d\'accueil</string>
+    <!--<string name="accessibility_service_description">Service pour Ecran d\'accueil</string>
+    -->
     <string name="messagebox_titre_cacher">Cacher</string>
     <string name="messagebox_cacher">"Voulez-vous cacher l\'application \"%1$s\"?\nL\'application ne sera pas désinstallée, juste supprimée de cette liste."</string>
     <string name="message_application_cachee">"Application \"%1$s\" cachée"</string>
@@ -10,4 +12,11 @@
     <string name="message_application_fin">"Application \"%1$s\" envoyée à la fin"</string>
     <string name="message_application_debut">"Application \"%1$s\" envoyée au début"</string>
     <string name="bouton_settings">Paramètres</string>
+    <string name="bouton_OK">OK</string>
+    <string name="bouton_annuler">Annuler</string>
+    <string name="packagename">Package name: %1$s</string>
+    <string name="nbLancements">Nombre de lancements: %1$d</string>
+    <string name="bouton_proprietes_systeme">Propriétés système...</string>
+    <string name="version">Version: %1$s</string>
+    <string name="accessibility_service_description">Service d\'interception des touches pour @string/app_name</string>
 </resources>

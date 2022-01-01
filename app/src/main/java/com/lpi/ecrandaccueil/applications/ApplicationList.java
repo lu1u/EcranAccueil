@@ -7,7 +7,6 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Canvas;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.lpi.ecrandaccueil.Preferences;
 
@@ -18,7 +17,6 @@ import java.util.List;
 public class ApplicationList
 {
 	ArrayList<ApplicationInstallee> _applications;
-	protected final ListeListener _listener;
 
 
 	public ArrayList<ApplicationInstallee> getApplications()
@@ -48,35 +46,15 @@ public class ApplicationList
 		_applications.add(application);
 	}
 
-	public interface ListeListener
-	{
-		void onListeChanged();
-	}
 
-	public ApplicationList(@NonNull ListeListener listener)
+	public ApplicationList()
 	{
-		_listener = listener;
+
 	}
 
 	public void litApplications(@NonNull final Context context, boolean inclureApplicationsCachees)
 	{
-
-		//AsyncTask t = new AsyncTask()
-		{
-		//	@Override protected Object doInBackground(final Object[] objects)
-			{
-				_applications = getListeAsync(context, inclureApplicationsCachees);
-		//		return null;
-			}
-
-		//	@Override protected void onPostExecute(final Object o)
-			{
-		//		super.onPostExecute(o);
-				_listener.onListeChanged();
-			}
-
-		}//;
-		//t.execute();
+		_applications = getListeAsync(context, inclureApplicationsCachees);
 	}
 
 	/***
@@ -187,5 +165,6 @@ public class ApplicationList
 		else
 			return _applications.size();
 	}
+
 }
 

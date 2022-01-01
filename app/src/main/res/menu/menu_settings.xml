@@ -6,9 +6,8 @@
         android:checkable="true"
         android:title="Son" />
     <item
-        android:id="@+id/menu_animations"
-        android:checkable="true"
-        android:title="Animations" />
+        android:id="@+id/menu_affichage"
+        android:title="Affichage" />
     <item
         android:id="@+id/menu_parametres"
         android:title="Paramètres système" />

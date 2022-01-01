@@ -3,6 +3,7 @@ package com.lpi.ecrandaccueil.sound;
 import android.content.Context;
 import android.media.MediaPlayer;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.lpi.ecrandaccueil.Preferences;
@@ -17,7 +18,6 @@ public class SoundManager
 	public static final int NIVEAUX_MAX= NIVEAUX_VOLUME-1 ;
 	private static @Nullable SoundManager _instance;
 	private int _volume ;
-	//private Context _context;
 	private MediaPlayer _mpDroite;
 	private MediaPlayer _mpGauche;
 	private MediaPlayer _mpLance;
@@ -27,7 +27,7 @@ public class SoundManager
 	 * @param context
 	 * @return
 	 */
-	public static synchronized SoundManager getInstance(@Nullable final Context context)
+	public static synchronized @NonNull SoundManager getInstance(@Nullable final Context context)
 	{
 		if (_instance == null)
 			_instance = new SoundManager(context);
@@ -35,6 +35,10 @@ public class SoundManager
 		return _instance;
 	}
 
+	/***
+	 * Constructeur privé, utilisable par getInstance uniquement
+	 * @param context
+	 */
 	private SoundManager(@Nullable final Context context)
 	{
 		_volume = Preferences.getInstance(context).getInt(Preferences.PREF_VOLUME, 3);
@@ -123,7 +127,10 @@ public class SoundManager
 			}
 	}
 
-	public void inverseSon()
+	/***
+	 * Coupe, met le son
+	 */
+	public void inverseVolume()
 	{
 		if ( _volume > 0)
 			_volume = 0;

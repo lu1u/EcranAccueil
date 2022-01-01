@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="marge_icone">16dp</dimen>
-    <dimen name="radius_case">8dp</dimen>
-
+    <dimen name="radius_case">2dp</dimen>
     <dimen name="marge_case">6px</dimen>
-    <dimen name="marge_case_selectionnee_1">8px</dimen>
-    <dimen name="marge_case_selectionnee_2">6px</dimen>
-    <dimen name="marge_case_selectionnee_3">4px</dimen>
-    <dimen name="marge_case_selectionnee_4">2px</dimen>
-    <dimen name="marge_case_selectionnee_5">0px</dimen>
+    <dimen name="marge_case_selectionnee_1">6px</dimen>
+    <dimen name="marge_case_selectionnee_2">4px</dimen>
+    <dimen name="marge_case_selectionnee_3">2px</dimen>
+    <dimen name="marge_case_selectionnee_4">0px</dimen>
+    <dimen name="marge_case_selectionnee_5">-2px</dimen>
+    <dimen name="marge_case_selectionnee_6">-5px</dimen>
+    <dimen name="marge_case_selectionnee_7">-9px</dimen>
+    <dimen name="marge_case_selectionnee_8">-14px</dimen>
     <dimen name="padding">96dp</dimen>
-    <dimen name="hauteur_liste_media">96dp</dimen>
-
-    <dimen name="hauteur_icone">180dp</dimen>
-    <dimen name="largeur_icone">180dp</dimen>
+      <dimen name="largeur_stroke_scrollbar">1dp</dimen>
+    <dimen name="taille_ronds_scrollbar">20dp</dimen>
+    <dimen name="taille_icone">96dp</dimen>
 </resources>

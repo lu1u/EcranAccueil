@@ -3,10 +3,6 @@
     package="com.lpi.ecrandaccueil">
 
     <permission android:name="android.permission.QUERY_ALL_PACKAGES" />
-<!--
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
--->
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
@@ -48,11 +44,7 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.EcranDaccueil">
-        <!--        <activity
-            android:name=".MainActivity2"
-            android:exported="true">
-
-        </activity>
+<!--
 
         <service
             android:stopWithTask="false"
@@ -73,7 +65,7 @@
         </service>
 
         <activity
-            android:name=".AttribueToucheActivity"
+                  android:name=".AttribueToucheActivity"
             android:exported="true" />
         -->
 

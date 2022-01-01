@@ -1,5 +1,34 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item
+        android:bottom="@dimen/marge_case_selectionnee_8"
+        android:left="@dimen/marge_case_selectionnee_8"
+        android:right="@dimen/marge_case_selectionnee_8"
+        android:top="@dimen/marge_case_selectionnee_8">
+        <shape>
+            <solid android:color="@color/couleur_halo" />
+            <corners android:radius="@dimen/radius_case" />
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/marge_case_selectionnee_7"
+        android:left="@dimen/marge_case_selectionnee_7"
+        android:right="@dimen/marge_case_selectionnee_7"
+        android:top="@dimen/marge_case_selectionnee_7">
+        <shape>
+            <solid android:color="@color/couleur_halo" />
+            <corners android:radius="@dimen/radius_case" />
+        </shape>
+    </item>
+    <item
+    android:bottom="@dimen/marge_case_selectionnee_6"
+    android:left="@dimen/marge_case_selectionnee_6"
+    android:right="@dimen/marge_case_selectionnee_6"
+    android:top="@dimen/marge_case_selectionnee_6">
+    <shape>
+        <solid android:color="@color/couleur_halo" />
+        <corners android:radius="@dimen/radius_case" />
+    </shape>
+</item>
     <item
         android:bottom="@dimen/marge_case_selectionnee_5"
         android:left="@dimen/marge_case_selectionnee_5"

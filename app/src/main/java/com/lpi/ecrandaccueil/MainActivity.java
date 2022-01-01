@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 
@@ -25,10 +26,9 @@ import com.lpi.ecrandaccueil.sound.SoundManager;
 public class MainActivity extends AppCompatActivity
 {
 	private static final String TAG = "MainActivity";
-	ListeApplicationsView _listeApplicationsView;
-	ImageButton _bntSettings;
+	private ListeApplicationsView _listeApplicationsView;
+	private ImageButton _bntSettings;
 	private AnimationDrawable _animationDrawable;
-
 
 	/***
 	 * Creation de la vue
@@ -48,8 +48,9 @@ public class MainActivity extends AppCompatActivity
 
 		_bntSettings = findViewById(R.id.imageButtonSettings);
 		_listeApplicationsView = findViewById(R.id.listeApplications);
-		//_bntSettings.setVisibility(View.GONE);
-		//_listeApplicationsView.setVisibility(View.GONE);
+		_bntSettings.setVisibility(View.GONE);
+		_progressBar.setVisibility(View.VISIBLE);
+
 		registerForContextMenu(_listeApplicationsView);
 		registerForContextMenu(_bntSettings);
 
@@ -62,27 +63,30 @@ public class MainActivity extends AppCompatActivity
 			{
 				openContextMenu(_listeApplicationsView);
 			}
+		});
 
-			@Override public void initialisationTerminee()
+		SoundManager.getInstance(this);
+		boolean animations = preferences.getBoolean(Preferences.PREF_ANIMATIONS, true);
+		findViewById(R.id.animationView2).setVisibility(animations ? View.VISIBLE : View.GONE);
+
+		ActionDifferee.execute(new ActionDifferee.Action()
+		{
+			@Override public void onStart(@Nullable final Object startObject) {}
+
+			@Override public void onFinish(@Nullable final Object finishObject)
 			{
 				_progressBar.setVisibility(View.GONE);
 				_bntSettings.setVisibility(View.VISIBLE);
 				_listeApplicationsView.setVisibility(View.VISIBLE);
 				_listeApplicationsView.requestFocus();
 			}
-		});
 
-		SoundManager.getInstance(this);
-		boolean animations = preferences.getBoolean(Preferences.PREF_ANIMATIONS, true);
-		if ( animations)
-		{
-			findViewById(R.id.animationView2).setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			findViewById(R.id.animationView2).setVisibility(View.GONE);
-
-		}
+			@Nullable @Override public Object execute(@Nullable final Object startObject)
+			{
+				_listeApplicationsView.initApplications();
+				return null;
+			}
+		}, this);
 	}
 
 	/***
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity
 			super.onResume();
 			//setFullScreen(this);
 
-			// Relancer les animations
+			// Relancer l'animation
 			View layoutView = this.findViewById(R.id.layout);
 			if (layoutView != null)
 			{
@@ -195,8 +199,8 @@ public class MainActivity extends AppCompatActivity
 				SoundManager sm = SoundManager.getInstance(this);
 				MenuItem item = menu.findItem(R.id.menu_son);
 				item.setChecked(sm.getVolume() > 0);
-				item = menu.findItem(R.id.menu_animations);
-				item.setChecked(Preferences.getInstance(this).getBoolean(Preferences.PREF_ANIMATIONS, true));
+				//item = menu.findItem(R.id.menu_animations);
+				//item.setChecked(Preferences.getInstance(this).getBoolean(Preferences.PREF_ANIMATIONS, true));
 			}
 		}
 	}
@@ -225,8 +229,15 @@ public class MainActivity extends AppCompatActivity
 			case R.id.menu_relire:
 				_listeApplicationsView.reinitApplications();
 				break;
-			case R.id.menu_animations:
-				montreOuCacheAnimations();
+			//case R.id.menu_animations:
+			//	montreOuCacheAnimations();
+			//	break;
+			case R.id.action_proprietes:
+				proprietesApplication();
+				break;
+
+			case R.id.menu_affichage:
+				proprietesAffichage();
 				break;
 
 			default:
@@ -236,40 +247,83 @@ public class MainActivity extends AppCompatActivity
 		return true;
 	}
 
-	/***
-	 * Montre ou cache les animations
-	 */
-	private void montreOuCacheAnimations()
+	private void proprietesAffichage()
 	{
-		Preferences preferences = Preferences.getInstance(this);
-		boolean animations = preferences.getBoolean(Preferences.PREF_ANIMATIONS, true);
-		animations = ! animations;
-		if ( animations)
+		DialogPreferencesAffichage.start(this, new DialogPreferencesAffichage.DialogPreferenceAffichageListener()
 		{
-			findViewById(R.id.animationView2).setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			findViewById(R.id.animationView2).setVisibility(View.GONE);
+			@Override public void onAnimationChanged()
+			{
+				Preferences preferences = Preferences.getInstance(MainActivity.this);
+				boolean animations = preferences.getBoolean(Preferences.PREF_ANIMATIONS, true);
+				if (animations)
+					findViewById(R.id.animationView2).setVisibility(View.VISIBLE);
+				else
+					findViewById(R.id.animationView2).setVisibility(View.GONE);
+			}
 
-		}
-		preferences.setBoolean(Preferences.PREF_ANIMATIONS, animations);
+			@Override public void onNbParRangeeChanged()
+			{
+				_listeApplicationsView.reinitAttributs();
+			}
+
+			@Override public void onDialogClosed()
+			{
+
+			}
+		});
 	}
 
+	private void proprietesApplication()
+	{
+		ApplicationInstallee app = _listeApplicationsView.getSelectedApplication();
+		if (app == null)
+			return;
+
+		ProprietesApplication.start(this, app);
+	}
+	/***
+	 * Option de menu: Montre ou cache les animations
+	 */
+	//private void montreOuCacheAnimations()
+	//{
+	//	Preferences preferences = Preferences.getInstance(this);
+	//	boolean animations = preferences.getBoolean(Preferences.PREF_ANIMATIONS, true);
+	//	animations = !animations;
+	//	if (animations)
+	//	{
+	//		findViewById(R.id.animationView2).setVisibility(View.VISIBLE);
+	//	}
+	//	else
+	//	{
+	//		findViewById(R.id.animationView2).setVisibility(View.GONE);
+//
+	//	}
+	//	preferences.setBoolean(Preferences.PREF_ANIMATIONS, animations);
+	//}
+
+	/***
+	 * Option de menu: Parametres systeme
+	 */
 	private void onMenuParametres()
 	{
 		startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
 	}
 
+	/***
+	 * Option de menu: A propos
+	 */
 	private void onMenuAPropos()
 	{
 		DialogAPropos.start(this);
 	}
 
+	/***
+	 * Option de menu: son
+	 */
 	private void onMenuSon()
 	{
 		SoundManager sm = SoundManager.getInstance(this);
-		sm.inverseSon();
+		sm.inverseVolume();
 	}
 
 }

@@ -1,0 +1,12 @@
+<resources>
+    <declare-styleable name="EditNumberDPad">
+        <attr name="ENDPtailleTexte" format="dimension"/>
+        <attr name="ENDPValeur" format="integer"/>
+        <attr name="ENDPMin" format="integer"/>
+        <attr name="ENDPMax" format="integer"/>
+        <attr name="ENDPDroite" format="reference"/>
+        <attr name="ENDPGauche" format="reference"/>
+        <attr name="ENDPCouleur" format="color"/>
+        <attr name="ENDPCouleurSelectionnee" format="color"/>
+    </declare-styleable>
+</resources>

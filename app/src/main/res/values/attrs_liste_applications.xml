@@ -3,9 +3,11 @@
             <attr name="ListeNbParLigne" format="integer"/>
             <attr name="ListeDrawableFondCase" format="reference" />
             <attr name="ListeDrawableFondCaseSelectionnee" format="reference" />
+            <attr name="ListeDrawableScrollbarVide" format="reference" />
+            <attr name="ListeDrawableScrollbarPlein" format="reference" />
+            <attr name="ListeDrawableScrollbarTaille" format="dimension" />
             <attr name="ListeMargeIcone" format="dimension" />
             <attr name="ListeMargeX" format="dimension" />
-            <attr name="ListeTexteTaille" format="dimension" />
             <attr name="ListeTexteCouleur" format="color"/>
             <attr name="ListeIndicateurDroite" format="reference"/>
             <attr name="ListeIndicateurGauche" format="reference"/>

@@ -11,8 +11,11 @@
         android:scaleY="4.125"
         android:translateX="24.1"
         android:translateY="40.5">
+
       <path
           android:fillColor="@color/primary"
+          android:strokeWidth="0.2"
+          android:strokeColor="@color/secondary"
           android:pathData="M10,20v-6h4v6h5v-8h3L12,3 2,12h3v8z"/>
     </group>
 

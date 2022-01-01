@@ -2,6 +2,7 @@ package com.lpi.ecrandaccueil.applications;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Canvas;
@@ -11,7 +12,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.TextPaint;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,9 +20,10 @@ import com.lpi.ecrandaccueil.Preferences;
 
 public class ApplicationInstallee
 {
+	public static final int PAS_DE_RACCOURCI = -1;
 	private final String _packageName;
-	private @Nullable Drawable _icone;
-	private String _nom;
+	private @Nullable final Drawable _icone;
+	private final String _nom;
 	private TextPaint _tPaint;
 	private int _hauteurTexte;
 	private int _nbLancements;
@@ -37,8 +38,6 @@ public class ApplicationInstallee
 		_nbLancements = nbLancements;
 		Preferences.getInstance(null).setInt(Preferences.PREF_NB_LANCEMENTS, _packageName, _nbLancements);
 	}
-
-
 
 	public @Nullable Drawable getIcone()
 	{
@@ -57,7 +56,7 @@ public class ApplicationInstallee
 	}
 
 	// Pour simulation en mode edit uniquement
-	public ApplicationInstallee(@NonNull final String nom, @NonNull final String packagename, @NonNull final Drawable icone, int raccourci)
+	public ApplicationInstallee(@NonNull final String nom, @NonNull final String packagename, @NonNull final Drawable icone)
 	{
 		_packageName = packagename;
 		_nom = nom;
@@ -68,31 +67,31 @@ public class ApplicationInstallee
 	public ApplicationInstallee(@NonNull final PackageManager packageManager, @NonNull final ResolveInfo resolveInfo)
 	{
 		_packageName = resolveInfo.activityInfo.packageName;
-		loadIcone(packageManager, resolveInfo);
-		try
-		{
-			_nom = resolveInfo.loadLabel(packageManager).toString();
-		} catch (Exception e)
-		{
-			_nom = _packageName;
-		}
+		_nom = resolveInfo.loadLabel(packageManager).toString();
+		_icone = getIcone(packageManager, resolveInfo);
 
 		Preferences prefs = Preferences.getInstance(null);
 		_nbLancements = prefs.getInt(Preferences.PREF_NB_LANCEMENTS, _packageName, 0);
 	}
 
-	private void loadIcone(@NonNull final PackageManager packageManager, @NonNull final ResolveInfo resolveInfo)
+	private @Nullable Drawable getIcone(@NonNull final PackageManager packageManager, @NonNull final ResolveInfo resolveInfo)
 	{
-		new Thread(() ->
+		try
 		{
-			try
-			{
-				_icone = resolveInfo.loadIcon(packageManager);
-			} catch (Exception e)
-			{
-				_icone = null;
-			}
-		}).start();
+			return resolveInfo.loadIcon(packageManager);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		try
+		{
+			return packageManager.getApplicationIcon(_packageName);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String getNom()
@@ -122,19 +121,19 @@ public class ApplicationInstallee
 			calculeTPaint(l, attributs.hauteurTexteMax);
 			_tPaint.setAntiAlias(true);
 			_tPaint.setColor(attributs.couleurTexte);
-			_tPaint.setShadowLayer(2,2,2, Color.BLACK);
+			_tPaint.setShadowLayer(2, 2, 2, Color.BLACK);
 		}
 
-		float centreX = x + (l*0.5f);
-		float centreY = y + (h*0.5f);
-		if ( selectionnee )
+		float centreX = x + (l * 0.5f);
+		float centreY = y + (h * 0.5f);
+		if (selectionnee)
 		{
 			l *= attributs.ratioSelection;
 			h *= attributs.ratioSelection;
 		}
 
-		x = centreX - (l*0.5f);
-		y = centreY - (h*0.5f);
+		x = centreX - (l * 0.5f);
+		y = centreY - (h * 0.5f);
 
 		drawDrawable(canvas, x, y, l, h - _hauteurTexte, selectionnee ? attributs.fondSelectionne : attributs.fond, attributs.focus);
 		if (_icone != null)
@@ -161,7 +160,7 @@ public class ApplicationInstallee
 		if (drawable == null)
 			return;
 
-		if ( focus)
+		if (focus)
 			drawable.setColorFilter(null);
 		else
 			drawable.setColorFilter(Color.GRAY, PorterDuff.Mode.SCREEN);
@@ -170,6 +169,7 @@ public class ApplicationInstallee
 		drawable.setCallback(null);
 		drawable.draw(canvas);
 	}
+
 	public void setCachee(boolean cachee)
 	{
 		Preferences.getInstance(null).setInt(Preferences.PREF_CACHEE, _packageName, cachee ? 1 : 0);
@@ -230,10 +230,28 @@ public class ApplicationInstallee
 			}
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			context.startActivity(intent);
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			e.printStackTrace();
+		}
+	}
+
+	/***
+	 * Retrouve le numero de version de l'application
+	 * @param context
+	 * @return
+	 */
+	public String getAppVersion(@NonNull final Context context)
+	{
+		try
+		{
+			PackageManager manager = context.getPackageManager();
+			PackageInfo info = manager.getPackageInfo(_packageName, 0);
+
+			return info.versionName;
+		} catch (PackageManager.NameNotFoundException e)
+		{
+			return "";
 		}
 	}
 }
