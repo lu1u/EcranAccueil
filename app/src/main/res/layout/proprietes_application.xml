@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/fond_dialogue"
@@ -20,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="TextView"
+        android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="@+id/imageIconeAppli"
         app:layout_constraintStart_toEndOf="@+id/imageIconeAppli"
@@ -31,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@string/animations"
         app:layout_constraintStart_toStartOf="@+id/tvNomAppli"
         app:layout_constraintTop_toBottomOf="@+id/tvNomAppli" />
 
@@ -40,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@string/affichage"
         app:layout_constraintStart_toStartOf="@+id/tvNomAppli"
         app:layout_constraintTop_toBottomOf="@+id/tvPackageName" />
 
@@ -49,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="TextView"
+        android:text="@string/animations"
         app:layout_constraintBottom_toBottomOf="@+id/tvPackageName"
         app:layout_constraintStart_toEndOf="@+id/tvPackageName"
         app:layout_constraintTop_toTopOf="@+id/tvPackageName" />

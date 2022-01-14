@@ -4,20 +4,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Canvas;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.lpi.ecrandaccueil.Preferences;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class ApplicationList
 {
 	ArrayList<ApplicationInstallee> _applications;
 
+	//
+	// Options: par défaut, ignorer un certain nombre d'applications
+	//
+	public static final String[] PACKAGE_NAMES_EXCLUS = {"com.android.deskclock", "com.mediatek.wwtv.tvcenter",
+			"com.google.android.tv.remote.service", "com.mstar.android.tv.disclaimercustomization", "com.disney.disneyplus",
+			"com.mstar.netflixobserver", "com.android.tv.tou", "com.tpv.xmic.ots.cms.client"};
+
+	private static boolean inPackageExclus(@NonNull final String packageName)
+	{
+		for (String s : PACKAGE_NAMES_EXCLUS)
+			if (packageName.equals(s))
+				return true;
+
+		return false;
+	}
 
 	public ArrayList<ApplicationInstallee> getApplications()
 	{
@@ -54,7 +68,7 @@ public class ApplicationList
 
 	public void litApplications(@NonNull final Context context, boolean inclureApplicationsCachees)
 	{
-		_applications = getListeAsync(context, inclureApplicationsCachees);
+		_applications = getListe(context, inclureApplicationsCachees);
 	}
 
 	/***
@@ -63,24 +77,21 @@ public class ApplicationList
 	 * @param inclureApplicationsCachees
 	 * @return
 	 */
-	protected ArrayList<ApplicationInstallee> getListeAsync(@NonNull final Context context, boolean inclureApplicationsCachees)
+	protected @NonNull
+	ArrayList<ApplicationInstallee> getListe(@NonNull final Context context, boolean inclureApplicationsCachees)
 	{
 		ArrayList<ApplicationInstallee> a = new ArrayList<>();
 		PackageManager packageManager = context.getPackageManager();
 
 		Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
 		mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-		List<ResolveInfo> intentActivities = packageManager.queryIntentActivities(mainIntent, 0);
-
 		//mainIntent = new Intent(Intent.ACTION_MAIN, null);
 		//mainIntent.addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER);
 
 		final Collection<? extends ResolveInfo> activities = packageManager.queryIntentActivities(mainIntent, 0);
 		if (activities != null)
 		{
-			intentActivities.addAll(activities);
-
-			for (ResolveInfo resolveInfo : intentActivities)
+			for (ResolveInfo resolveInfo : activities)
 			{
 				if (includeApplication(a, resolveInfo.activityInfo.packageName, inclureApplicationsCachees))
 					a.add(new ApplicationInstallee(packageManager, resolveInfo));
@@ -92,8 +103,12 @@ public class ApplicationList
 		return a;
 	}
 
-	private boolean includeApplication(final ArrayList<ApplicationInstallee> appList, final String packageName, final boolean inclureApplicationsCachees)
+	private boolean includeApplication(final @NonNull ArrayList<ApplicationInstallee> appList, final @NonNull String packageName, final boolean inclureApplicationsCachees)
 	{
+		// Option: un certain nombre d'applications exclues automatiquement
+		if (inPackageExclus(packageName))
+			return false;
+
 		if (dansLaListe(appList, packageName))
 			return false;
 
@@ -123,7 +138,7 @@ public class ApplicationList
 		});
 	}
 
-	private boolean dansLaListe(ArrayList<ApplicationInstallee> app, final String packageName)
+	private boolean dansLaListe(@NonNull final ArrayList<ApplicationInstallee> app, @NonNull final String packageName)
 	{
 		for (ApplicationInstallee a : app)
 		{
@@ -133,7 +148,7 @@ public class ApplicationList
 		return false;
 	}
 
-	public void demarre(final int noAppli, final Context context)
+	public void demarre(final int noAppli, @NonNull final Context context)
 	{
 		if (_applications == null)
 			return;
@@ -144,12 +159,7 @@ public class ApplicationList
 		triListe(_applications);
 	}
 
-	public void affiche(@NonNull final Canvas canvas, final int i, final float x, final float y, final float largeurCase, final float hauteurCase, final boolean selectionnee, @NonNull final ApplicationInstallee.AttributsGraphiques attributs)
-	{
-		_applications.get(i).affiche(canvas, x, y, largeurCase, hauteurCase, selectionnee, attributs);
-	}
-
-	public ApplicationInstallee get(int i)
+	public @Nullable ApplicationInstallee get(int i)
 	{
 		if (_applications == null)
 			return null;

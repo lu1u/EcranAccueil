@@ -4,17 +4,17 @@
     <item
         android:id="@+id/menu_son"
         android:checkable="true"
-        android:title="Son" />
+        android:title="@string/son" />
     <item
         android:id="@+id/menu_affichage"
-        android:title="Affichage" />
+        android:title="@string/affichage" />
     <item
         android:id="@+id/menu_parametres"
-        android:title="Paramètres système" />
+        android:title="@string/param_tres_syst_me" />
     <item
-            android:id="@+id/menu_relire"
-            android:title="Relire les applications" />
+        android:id="@+id/menu_relire"
+        android:title="@string/relire_les_applications" />
     <item
-    android:id="@+id/menu_a_propos"
-    android:title="A propos..." />
+        android:id="@+id/menu_a_propos"
+        android:title="@string/a_propos" />
 </menu>

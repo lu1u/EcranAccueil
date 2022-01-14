@@ -12,7 +12,10 @@
     <dimen name="marge_case_selectionnee_7">-9px</dimen>
     <dimen name="marge_case_selectionnee_8">-14px</dimen>
     <dimen name="padding">96dp</dimen>
-      <dimen name="largeur_stroke_scrollbar">1dp</dimen>
-    <dimen name="taille_ronds_scrollbar">20dp</dimen>
+    <dimen name="largeur_stroke_scrollbar">1dp</dimen>
+    <dimen name="taille_ronds_scrollbar">10dp</dimen>
     <dimen name="taille_icone">96dp</dimen>
+    <dimen name="largeur_icone">48dp</dimen>
+    <dimen name="hauteur_icone">48dp</dimen>
+
 </resources>

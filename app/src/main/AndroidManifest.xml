@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lpi.ecrandaccueil">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
@@ -44,30 +47,18 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.EcranDaccueil">
-<!--
 
-        <service
-            android:stopWithTask="false"
 
-            android:name=".service.TVLauncherService"
-            android:canRequestFilterKeyEvents="true"
-            android:enabled="true"
-            android:exported="true"
-            android:label="@string/accessibility_service_label"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-
+        <provider
+            android:name=".utils.GenericFileProvider"
+            android:authorities="com.lpi.ecrandaccueil.utils.GenericFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:readPermission="com.lpi.ecrandaccueil.GenericFileProvider.READ">
             <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config" />
-        </service>
-
-        <activity
-                  android:name=".AttribueToucheActivity"
-            android:exported="true" />
-        -->
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
 
         <activity
             android:name=".MainActivity"

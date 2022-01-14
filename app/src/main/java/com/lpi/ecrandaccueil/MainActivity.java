@@ -1,9 +1,11 @@
 package com.lpi.ecrandaccueil;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -12,23 +14,38 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.MenuCompat;
 
 import com.lpi.ecrandaccueil.applications.ApplicationInstallee;
 import com.lpi.ecrandaccueil.customviews.ListeApplicationsView;
+import com.lpi.ecrandaccueil.database.MediaDatabase;
+import com.lpi.ecrandaccueil.medias.MediaAdapter;
+import com.lpi.ecrandaccueil.medias.mediaelements.ElementListeMedias;
 import com.lpi.ecrandaccueil.sound.SoundManager;
+import com.lpi.ecrandaccueil.utils.BackgroundTaskWithSpinner;
+import com.lpi.ecrandaccueil.utils.FileUtils;
+import com.lpi.ecrandaccueil.utils.MessageBoxUtil;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements View.OnFocusChangeListener
 {
 	private static final String TAG = "MainActivity";
+	private static final int PERMISSION_REQUEST_CODE = 2;
+	public static final float RATIO_NON_FOCUS = 0.01f;
+	public static final float RATIO_FOCUS = 0.90f;
 	private ListeApplicationsView _listeApplicationsView;
 	private ImageButton _bntSettings;
-	private AnimationDrawable _animationDrawable;
+	@Nullable private AnimationDrawable _animationDrawable;
+	private ListView _lvMedias;
+	private MediaAdapter _adapter;
+	private TextView _tvMedias;
 
 	/***
 	 * Creation de la vue
@@ -41,52 +58,187 @@ public class MainActivity extends AppCompatActivity
 		setContentView(R.layout.activity_main);
 		setFullScreen(this);
 
-		Preferences preferences = Preferences.getInstance(this); // Initialiser le singleton
+		Preferences.getInstance(this); // Initialiser le singleton
+		SoundManager.getInstance(this);
 
-		final ProgressBar _progressBar = findViewById(R.id.progressBar);
-		_progressBar.setVisibility(View.VISIBLE);
+		if (checkPermissions(true))
+			initApplication();
+	}
 
+	/***
+	 * Initialisation de l'application, une partie en tache de fond
+	 */
+	private void initApplication()
+	{
+		// Activer les animations quand un controle change de taille
+		//((ViewGroup) findViewById(R.id.layoutMain)).getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+
+		// Recuperer les controles
 		_bntSettings = findViewById(R.id.imageButtonSettings);
 		_listeApplicationsView = findViewById(R.id.listeApplications);
-		_bntSettings.setVisibility(View.GONE);
-		_progressBar.setVisibility(View.VISIBLE);
+		_lvMedias = findViewById(R.id.lvFichiers);
+		_tvMedias = findViewById(R.id.tvMedias);
 
-		registerForContextMenu(_listeApplicationsView);
-		registerForContextMenu(_bntSettings);
+		// Cacher les controles le temps de l'initialisation
+		_lvMedias.setVisibility(View.GONE);
+		_tvMedias.setVisibility(View.GONE);
+		_listeApplicationsView.setVisibility(View.GONE);
 
-		_bntSettings.setOnClickListener(view ->
-				openContextMenu(_bntSettings));
+		// Surveiller le changement de focus
+		_lvMedias.setOnFocusChangeListener(this);
 
-		_listeApplicationsView.setListener(new ListeApplicationsView.ListeApplicationListener()
+		// Menu contextuel
+		_bntSettings.setOnClickListener(view -> openContextMenu(_bntSettings));
+		_listeApplicationsView.setListener(() -> openContextMenu(_listeApplicationsView));
+
+		_lvMedias.setOnItemClickListener((adapterView, view, position, id) ->
 		{
-			@Override public void onOpenMenu()
+			ElementListeMedias f = _adapter.getItem(position);
+			if (f != null)
 			{
-				openContextMenu(_listeApplicationsView);
+				ouvreElement(f);
 			}
 		});
 
-		SoundManager.getInstance(this);
+		Preferences preferences = Preferences.getInstance(this);
 		boolean animations = preferences.getBoolean(Preferences.PREF_ANIMATIONS, true);
 		findViewById(R.id.animationView2).setVisibility(animations ? View.VISIBLE : View.GONE);
 
-		ActionDifferee.execute(new ActionDifferee.Action()
+		BackgroundTaskWithSpinner.execute(this, R.layout.background_working, new BackgroundTaskWithSpinner.TaskListener()
 		{
-			@Override public void onStart(@Nullable final Object startObject) {}
-
-			@Override public void onFinish(@Nullable final Object finishObject)
+			@Override public void execute()
 			{
-				_progressBar.setVisibility(View.GONE);
-				_bntSettings.setVisibility(View.VISIBLE);
-				_listeApplicationsView.setVisibility(View.VISIBLE);
-				_listeApplicationsView.requestFocus();
-			}
 
-			@Nullable @Override public Object execute(@Nullable final Object startObject)
-			{
 				_listeApplicationsView.initApplications();
-				return null;
+				_adapter = MediaAdapter.createAdapter(MainActivity.this, null);
 			}
-		}, this);
+
+			@Override public void onFinished()
+			{
+				_lvMedias.setAdapter(_adapter);
+				_tvMedias.setText(getString(R.string.medias, _adapter.getTitre(MainActivity.this)));
+				ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) _lvMedias.getLayoutParams();
+				lp.height = (int) (MainActivity.this.getWindow().getDecorView().getHeight() * RATIO_NON_FOCUS);
+				_lvMedias.setLayoutParams(lp);
+
+				// Montrer les controles maintenant que l'application est initialisee
+				_lvMedias.setVisibility(View.VISIBLE);
+				_tvMedias.setVisibility(View.VISIBLE);
+				_listeApplicationsView.setVisibility(View.VISIBLE);
+
+				_listeApplicationsView.requestFocus();
+
+				registerForContextMenu(_listeApplicationsView);
+				registerForContextMenu(_bntSettings);
+			}
+		});
+
+	}
+
+	/***
+	 * Ouvre un element dans la liste des medias
+	 * @param f
+	 */
+	private void ouvreElement(final @NonNull ElementListeMedias f)
+	{
+		if (f.isDirectory())
+		{
+			_adapter = MediaAdapter.createAdapter(MainActivity.this, f);
+			_lvMedias.setAdapter(_adapter);
+			_tvMedias.setText(getString(R.string.medias, _adapter.getTitre(MainActivity.this)));
+		}
+		else
+		{
+			MediaDatabase.getInstance(this).ajoute(f.getPath(), 0, 0);
+			_adapter.notifyDataSetChanged();
+			FileUtils.ouvreFichier(this, f.getFile());
+		}
+	}
+
+	static final @NonNull String[] PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE};
+
+	/***
+	 * Reception du resultat de la demande de permissions
+	 * @param requestCode
+	 * @param resultCode
+	 * @param intent
+	 */
+	@Override
+	protected void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent intent)
+	{
+		super.onActivityResult(requestCode, resultCode, intent);
+		Log.d(TAG, "onActivityResult, requestcode: " + requestCode + ",resultcode: " + resultCode);
+		if (intent != null)
+		{
+			String action = intent.getAction();
+			if ("org.videolan.vlc.player.result".equals(action))
+			{
+				Uri data = intent.getData();
+				if (data != null)
+				{
+					String path = data.getPath();
+					Log.d(TAG, "Path: " + path);
+				}
+				Log.d(TAG, "action: " + action);
+				Log.d(TAG, "Extra position: " + intent.getExtras().getInt("extra_position"));
+				Log.d(TAG, "Extra duration: " + intent.getExtras().getInt("extra_duration"));
+			}
+		}
+	}
+
+	/***
+	 * Verifie que les permissions necessaires sont bien allouées, les demande si besoin
+	 * @param request
+	 * @return
+	 */
+	private boolean checkPermissions(boolean request)
+	{
+		boolean toutAccorde = true;
+		for (String permission : PERMISSIONS)
+		{
+			if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED)
+			{
+				toutAccorde = false;
+				break;
+			}
+		}
+
+		if (!toutAccorde)
+		{
+			if (request)
+				ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_REQUEST_CODE);
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults)
+	{
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (checkPermissions(false))
+		{
+			initApplication();
+		}
+		else
+		{
+			// Les permissions n'ont pas ete accordées
+			MessageBoxUtil.messageBox(MainActivity.this, "L'application ne peut pas fonctionner correctement si vous ne lui accordez pas les permissions nécéssaires.\nVoulez-vous accorder les permission?",
+					"Permissions non accordées", MessageBoxUtil.BOUTON_OK | MessageBoxUtil.BOUTON_CANCEL, new MessageBoxUtil.Listener()
+					{
+						@Override public void onOk()
+						{
+							checkPermissions(true);
+						}
+
+						@Override public void onCancel()
+						{
+							finish();
+							moveTaskToBack(true);
+						}
+					}, null);
+		}
 	}
 
 	/***
@@ -123,7 +275,7 @@ public class MainActivity extends AppCompatActivity
 			//setFullScreen(this);
 
 			// Relancer l'animation
-			View layoutView = this.findViewById(R.id.layout);
+			View layoutView = this.findViewById(R.id.layoutMain);
 			if (layoutView != null)
 			{
 				_animationDrawable = (AnimationDrawable) layoutView.getBackground();
@@ -144,14 +296,14 @@ public class MainActivity extends AppCompatActivity
 	{
 		try
 		{
-			if (Build.VERSION.SDK_INT < 19)
-			{
-				a.getWindow().setFlags(
-						WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER,
-						WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER
-				                      );
-			}
-			else
+//			if (Build.VERSION.SDK_INT < 19)
+//			{
+//				a.getWindow().setFlags(
+//						WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER,
+//						WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER
+//				                      );
+//			}
+//			else
 			{
 				View decorView = a.getWindow().getDecorView();
 
@@ -199,8 +351,6 @@ public class MainActivity extends AppCompatActivity
 				SoundManager sm = SoundManager.getInstance(this);
 				MenuItem item = menu.findItem(R.id.menu_son);
 				item.setChecked(sm.getVolume() > 0);
-				//item = menu.findItem(R.id.menu_animations);
-				//item.setChecked(Preferences.getInstance(this).getBoolean(Preferences.PREF_ANIMATIONS, true));
 			}
 		}
 	}
@@ -268,7 +418,7 @@ public class MainActivity extends AppCompatActivity
 
 			@Override public void onDialogClosed()
 			{
-
+				_listeApplicationsView.invalidate();
 			}
 		});
 	}
@@ -281,25 +431,6 @@ public class MainActivity extends AppCompatActivity
 
 		ProprietesApplication.start(this, app);
 	}
-	/***
-	 * Option de menu: Montre ou cache les animations
-	 */
-	//private void montreOuCacheAnimations()
-	//{
-	//	Preferences preferences = Preferences.getInstance(this);
-	//	boolean animations = preferences.getBoolean(Preferences.PREF_ANIMATIONS, true);
-	//	animations = !animations;
-	//	if (animations)
-	//	{
-	//		findViewById(R.id.animationView2).setVisibility(View.VISIBLE);
-	//	}
-	//	else
-	//	{
-	//		findViewById(R.id.animationView2).setVisibility(View.GONE);
-//
-	//	}
-	//	preferences.setBoolean(Preferences.PREF_ANIMATIONS, animations);
-	//}
 
 	/***
 	 * Option de menu: Parametres systeme
@@ -326,4 +457,25 @@ public class MainActivity extends AppCompatActivity
 		sm.inverseVolume();
 	}
 
+	/***
+	 * Changement de focus, ajuster la taille des fenetres
+	 * @param view
+	 * @param b
+	 */
+	@Override public void onFocusChange(final View view, final boolean b)
+	{
+		ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) _lvMedias.getLayoutParams();
+		if (_lvMedias.hasFocus())
+		{
+			lp.height = (int) (this.getWindow().getDecorView().getHeight() * RATIO_FOCUS);
+		}
+		else
+		{
+			lp.height = (int) (this.getWindow().getDecorView().getHeight() * RATIO_NON_FOCUS);
+		}
+		_lvMedias.setLayoutParams(lp);
+		_lvMedias.forceLayout();
+		_lvMedias.setAdapter(_adapter);
+		_lvMedias.invalidate();
+	}
 }

@@ -2,15 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
         <item
             android:id="@+id/action_debut"
-            android:title="Envoyer au début" />
+            android:title="@string/envoyer_au_d_but" />
         <item
             android:id="@+id/action_fin"
-            android:title="Envoyer à la fin" />
+            android:title="@string/envoyer_la_fin" />
         <item
             android:id="@+id/action_cacher"
-            android:title="Cacher cette application" />
+            android:title="@string/cacher_cette_application" />
         <item
             android:id="@+id/action_proprietes"
-            android:title="Propriétés de l'application" />
-
+            android:title="@string/propri_t_s_de_l_application" />
 </menu>

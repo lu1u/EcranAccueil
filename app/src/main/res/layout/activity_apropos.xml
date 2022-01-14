@@ -18,7 +18,6 @@
         <ImageView
             android:layout_width="@dimen/taille_icone"
             android:layout_height="@dimen/taille_icone"
-            android:contentDescription="Icone"
             app:srcCompat="@drawable/icone" />
 
         <TextView

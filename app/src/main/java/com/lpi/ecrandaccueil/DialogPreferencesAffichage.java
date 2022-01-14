@@ -2,12 +2,10 @@ package com.lpi.ecrandaccueil;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 
@@ -34,37 +32,23 @@ class DialogPreferencesAffichage
 
 		CheckBox cbAnimations = dialogView.findViewById(R.id.cbAnimations);
 		cbAnimations.setChecked(preferences.getBoolean(Preferences.PREF_ANIMATIONS, true));
-		cbAnimations.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+		cbAnimations.setOnCheckedChangeListener((compoundButton, b) ->
 		{
-			@Override
-			public void onCheckedChanged(final CompoundButton compoundButton, final boolean b)
-			{
-				preferences.setBoolean(Preferences.PREF_ANIMATIONS, b);
-				listener.onAnimationChanged();
-			}
+			preferences.setBoolean(Preferences.PREF_ANIMATIONS, b);
+			listener.onAnimationChanged();
 		});
 
 		EditNumberDPad edNbParRangee = dialogView.findViewById(R.id.editNumberDPad);
 		edNbParRangee.setMin(ListeApplicationsView.NB_MIN_ICONES);
 		edNbParRangee.setMax(ListeApplicationsView.NB_MAX_ICONES);
 		edNbParRangee.setValeur(preferences.getInt(Preferences.PREF_NB_ICONES_PAR_RANGEE, 4));
-		edNbParRangee.setListener(new EditNumberDPad.EditNumberDPadListener()
+		edNbParRangee.setListener(valeur ->
 		{
-			@Override public void onValueChanged(final int valeur)
-			{
-				preferences.setInt(Preferences.PREF_NB_ICONES_PAR_RANGEE, valeur);
-				listener.onNbParRangeeChanged();
-			}
+			preferences.setInt(Preferences.PREF_NB_ICONES_PAR_RANGEE, valeur);
+			listener.onNbParRangeeChanged();
 		});
 
-
-		dialogBuilder.setOnCancelListener(new DialogInterface.OnCancelListener()
-		{
-			@Override public void onCancel(final DialogInterface dialogInterface)
-			{
-				listener.onDialogClosed();
-			}
-		});
+		dialogBuilder.setOnCancelListener(dialogInterface -> listener.onDialogClosed());
 
 		dialogBuilder.setView(dialogView);
 		dialogBuilder.show();

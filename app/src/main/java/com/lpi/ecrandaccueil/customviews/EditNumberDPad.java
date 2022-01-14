@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
@@ -110,7 +109,7 @@ public class EditNumberDPad extends View
 	 * Affichage
 	 * @param canvas
 	 */
-	@Override	protected void onDraw(Canvas canvas)
+	@Override protected void onDraw(@NonNull Canvas canvas)
 	{
 		super.onDraw(canvas);
 
@@ -120,13 +119,10 @@ public class EditNumberDPad extends View
 
 		int contentHeight = getHeight() - paddingTop - paddingBottom;
 
-		int largeurIndicateur = contentHeight;
-		int hauteurIndicateur = contentHeight;
+		afficheTexteDroite(canvas, "" + _valeur, getWidth() - paddingRight - contentHeight * 2, paddingTop + contentHeight / 2.0f, _textPaint);
 
-		afficheTexteDroite(canvas, ""+_valeur, getWidth() - paddingRight - largeurIndicateur*2, paddingTop + contentHeight /2.0f, _textPaint);
-
-		drawDrawable( canvas, getWidth() - paddingRight - largeurIndicateur, paddingTop, largeurIndicateur, hauteurIndicateur, _droite, _bDroitePresse);
-		drawDrawable( canvas, getWidth() - paddingRight - largeurIndicateur*2.0f, paddingTop, largeurIndicateur, hauteurIndicateur, _gauche, _bGauchePresse);
+		drawDrawable(canvas, getWidth() - paddingRight - contentHeight, paddingTop, contentHeight, contentHeight, _droite, _bDroitePresse);
+		drawDrawable(canvas, getWidth() - paddingRight - contentHeight * 2.0f, paddingTop, contentHeight, contentHeight, _gauche, _bGauchePresse);
 	}
 
 	/***
@@ -165,7 +161,7 @@ public class EditNumberDPad extends View
 	{
 		Rect rText = new Rect();
 		paint.getTextBounds(nom, 0, nom.length(), rText);
-		canvas.drawText(nom, x - rText.width() , y + rText.height() / 2, paint);
+		canvas.drawText(nom, x - rText.width(), y + rText.height() / 2.0f, paint);
 	}
 
 	@Override public boolean onKeyDown(final int keyCode, final KeyEvent event)

@@ -20,10 +20,10 @@ import com.lpi.ecrandaccueil.Preferences;
 
 public class ApplicationInstallee
 {
-	public static final int PAS_DE_RACCOURCI = -1;
+	//public static final int PAS_DE_RACCOURCI = -1;
 	private final String _packageName;
 	private @Nullable final Drawable _icone;
-	private final String _nom;
+	@NonNull private final String _nom;
 	private TextPaint _tPaint;
 	private int _hauteurTexte;
 	private int _nbLancements;
@@ -46,8 +46,8 @@ public class ApplicationInstallee
 
 	public static class AttributsGraphiques
 	{
-		public Drawable fond;
-		public Drawable fondSelectionne;
+		@Nullable public Drawable fond;
+		@Nullable public Drawable fondSelectionne;
 		public int couleurTexte;
 		public int margeIcone;
 		public float hauteurTexteMax;
@@ -94,7 +94,7 @@ public class ApplicationInstallee
 		return null;
 	}
 
-	public String getNom()
+	public @NonNull String getNom()
 	{
 		return _nom;
 	}

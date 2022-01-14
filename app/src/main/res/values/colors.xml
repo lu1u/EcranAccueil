@@ -5,6 +5,8 @@
     <color name="primaryDark">#1565C0</color>
     <color name="secondary">#FFC107</color>
     <color name="secondaryLight">#FFD54F</color>
+    <color name="secondaryDark">#FFA000</color>
+    <color name="secondaryDarkDark">#FF6F00</color>
     <color name="couleurFondIconeSelectionnee">@color/secondary</color>
     <color name="couleur_halo">#18FFC107</color>
     <color name="couleur_indicateur">#aa2196F3</color>
@@ -15,8 +17,5 @@
     <color name="couleurScrollbarStroke">#cfff</color>
     <color name="couleurScrollbarSolid">#afff</color>
     <color name="white">#fff</color>
-    <color name="light_blue_400">#FF29B6F6</color>
-    <color name="light_blue_600">#FF039BE5</color>
-    <color name="gray_400">#FFBDBDBD</color>
-    <color name="gray_600">#FF757575</color>
+    <color name="couleurFondListeFichiers">@color/secondary</color>
 </resources>

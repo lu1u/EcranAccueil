@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Ecran d\'accueil</string>
 
-    <string name="accessibility_service_label">@string/app_name</string>
-    <!--<string name="accessibility_service_description">Service pour Ecran d\'accueil</string>
+    <!--<string name="accessibility_service_label">@string/app_name</string>
+    <string name="accessibility_service_description">Service d\'interception des touches pour @string/app_name</string>
+    <string name="accessibility_service_description">Service pour Ecran d\'accueil</string>
     -->
     <string name="messagebox_titre_cacher">Cacher</string>
     <string name="messagebox_cacher">"Voulez-vous cacher l\'application \"%1$s\"?\nL\'application ne sera pas désinstallée, juste supprimée de cette liste."</string>
@@ -16,7 +17,20 @@
     <string name="bouton_annuler">Annuler</string>
     <string name="packagename">Package name: %1$s</string>
     <string name="nbLancements">Nombre de lancements: %1$d</string>
-    <string name="bouton_proprietes_systeme">Propriétés système...</string>
+    <string name="bouton_proprietes_systeme">Propriétés système…</string>
     <string name="version">Version: %1$s</string>
-    <string name="accessibility_service_description">Service d\'interception des touches pour @string/app_name</string>
+    <string name="medias">Médias: %1$s</string>
+    <string name="envoyer_au_d_but">Envoyer au début</string>
+    <string name="envoyer_la_fin">Envoyer à la fin</string>
+    <string name="cacher_cette_application">Cacher cette application</string>
+    <string name="propri_t_s_de_l_application">Propriétés de l\'application</string>
+    <string name="son">Son</string>
+    <string name="param_tres_syst_me">Paramètres système</string>
+    <string name="relire_les_applications">Relire les applications</string>
+    <string name="a_propos">A propos…</string>
+    <string name="animations">Animations</string>
+    <string name="nombre_d_icones">Nombre d\'icones:</string>
+    <string name="affichage">Affichage</string>
+    <string name="working_please_wait">Veuillez patienter…</string>
+
 </resources>

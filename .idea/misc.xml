@@ -9,6 +9,8 @@
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2755208333333333" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/background.xml" value="0.32083333333333336" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/background1.xml" value="0.2890625" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/background2.xml" value="0.2171875" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/background3.xml" value="0.2171875" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/case_fond.xml" value="0.5" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/case_fond_selectionne.xml" value="0.5" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/fond_anime.xml" value="0.4088541666666667" />
@@ -21,8 +23,13 @@
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/fond_liste_fichiers.xml" value="0.1" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_banner_background.xml" value="0.4114583333333333" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_banner_foreground.xml" value="0.4114583333333333" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.2171875" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_checkbox_blank_badge_outline.xml" value="0.2171875" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_eye_check_outline.xml" value="0.18385416666666668" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_launcher_background.xml" value="0.32083333333333336" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_menu_camera.xml" value="0.21666666666666667" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_settings.xml" value="0.1359375" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_usb_flash_drive.xml" value="0.23333333333333334" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_volume_high.xml" value="0.2869791666666667" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_volume_low.xml" value="0.2869791666666667" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/ic_volume_medium.xml" value="0.2869791666666667" />
@@ -32,28 +39,43 @@
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/indicateur_right.xml" value="0.3802083333333333" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/left.xml" value="0.29322916666666665" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/load.xml" value="0.29322916666666665" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/media_non_vu.xml" value="0.22083333333333333" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/media_vu.xml" value="0.2171875" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/repertoire.xml" value="0.1" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/repertoire_parent.xml" value="0.1" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/right.xml" value="0.29322916666666665" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/scrollbar_plein.xml" value="0.1078125" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/scrollbar_vide.xml" value="0.32083333333333336" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/selector_fond_application.xml" value="0.1" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/drawable/side_nav_bar.xml" value="0.21666666666666667" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout-sw600dp/fragment_item_list.xml" value="0.236328125" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/activity_apropos.xml" value="0.3054054054054054" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/activity_attribue_touche.xml" value="0.390625" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/activity_item_detail.xml" value="0.42864583333333334" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/activity_main.xml" value="0.45989583333333334" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/activity_main2.xml" value="0.33" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/activity_main_sauve.xml" value="0.33513513513513515" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/background_working.xml" value="0.44375" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/content_main.xml" value="0.35" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/element_liste_application.xml" value="0.4265625" />
-        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/element_liste_medias.xml" value="0.390625" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/element_liste_medias.xml" value="0.5" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/fragment_item_detail.xml" value="0.42864583333333334" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/fragment_item_list.xml" value="0.42864583333333334" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/item_list_content.xml" value="0.35" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/proprietes_affichage.xml" value="0.9" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/proprietes_application.xml" value="1.0" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/sample_animation_view.xml" value="0.33" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/sample_edit_number_d_pad.xml" value="0.40572916666666664" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/layout/sample_liste_applications.xml" value="0.390625" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/menu/applications_menu.xml" value="0.3541666666666667" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/menu/main2.xml" value="0.35" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/menu/main3.xml" value="0.35" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/menu/main_activity3.xml" value="0.35" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/menu/menu_settings.xml" value="0.26927083333333335" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/mipmap-anydpi-v26/ic_banner.xml" value="0.4114583333333333" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.27760416666666665" />
         <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.27760416666666665" />
+        <entry key="..\:/lucien/Developpement/Android/Ecrandaccueil/app/src/main/res/xml/filepaths.xml" value="0.23693693693693693" />
       </map>
     </option>
   </component>

@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.lpi.ecrandaccueil.R;
 
@@ -19,7 +20,7 @@ import java.util.Random;
  */
 public class AnimationView extends View
 {
-	public static final float MAX_V_H = 5.0f;
+	public static final float MAX_V_H = 8.0f;
 	// Attributs
 	int NB;
 	float TAILLE;
@@ -47,8 +48,10 @@ public class AnimationView extends View
 		init(null, 0);
 	}
 
-	private void init(AttributeSet attrs, int defStyle)
+	private void init(@Nullable AttributeSet attrs, int defStyle)
 	{
+		_r = new Random(System.currentTimeMillis());
+
 		// Load attributes
 		final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AnimationView, defStyle, 0);
 		NB = a.getInt(R.styleable.AnimationView_AnimNB, 100);
@@ -59,9 +62,9 @@ public class AnimationView extends View
 		VITESSE_MAX = a.getFloat(R.styleable.AnimationView_AnimVitesseMax, 60);
 
 		_images[0] = ListeApplicationsView.loadDrawable(a, R.styleable.AnimationView_AnimFlocon1);
-		if (_images[0] != null) _images[0].setTint(Color.argb(128, 255, 255, 255));
+		if (_images[0] != null) _images[0].setTint(Color.argb(64, 255, 255, 255));
 		_images[1] = ListeApplicationsView.loadDrawable(a, R.styleable.AnimationView_AnimFlocon2);
-		if (_images[1] != null) _images[1].setTint(Color.argb(128, 255, 255, 255));
+		if (_images[1] != null) _images[1].setTint(Color.argb(64, 255, 255, 255));
 
 		a.recycle();
 	}
@@ -88,7 +91,6 @@ public class AnimationView extends View
 		final int hauteur = getHeight();
 		final int largeur = getWidth();
 
-		_r = new Random(_derniereFrame);
 		long maintenant = System.currentTimeMillis();
 		final float deltaT = (float) (maintenant - _derniereFrame) / 1000.0f;
 
@@ -134,7 +136,7 @@ public class AnimationView extends View
 			try
 			{
 				// Attend un certain temps
-				Thread.sleep(50);
+				Thread.sleep(40);
 			} catch (InterruptedException e)
 			{
 				e.printStackTrace();

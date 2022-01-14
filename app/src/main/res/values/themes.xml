@@ -1,6 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Theme.EcranDaccueil" parent="Theme.MaterialComponents.DayNight.DarkActionBar" >
+    <style name="Theme.EcranDaccueil" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
@@ -14,5 +14,10 @@
         <item name="colorSecondaryVariant">@color/secondaryLight</item>
         <item name="colorOnSecondary">@android:color/black</item>
 
+    </style>
+
+    <style name="Theme.EcranDaccueil.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

@@ -20,7 +20,7 @@ android:padding="@dimen/marge_icone">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
-    android:text="Affichage"
+    android:text="@string/affichage"
     android:textAppearance="@style/TextAppearance.AppCompat.Large"
     app:layout_constraintStart_toEndOf="@+id/imageIconeAppli"
     app:layout_constraintTop_toTopOf="@+id/imageIconeAppli" />
@@ -37,7 +37,7 @@ android:padding="@dimen/marge_icone">
         android:nextFocusRight="@id/editNumberDPad"
         android:nextFocusUp="@id/editNumberDPad"
         android:nextFocusDown="@id/editNumberDPad"
-        android:text="Animations"
+        android:text="@string/animations"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -46,7 +46,7 @@ android:padding="@dimen/marge_icone">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Nombre d'icones:"
+        android:text="@string/nombre_d_icones"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/cbAnimations" />
 

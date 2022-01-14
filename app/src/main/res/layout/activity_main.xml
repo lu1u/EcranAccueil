@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout"
+    android:id="@+id/layoutMain"
     android:animateLayoutChanges="true"
 
     android:layout_width="match_parent"
@@ -20,8 +20,8 @@
         app:AnimFlocon1="@drawable/snowflake"
         app:AnimFlocon2="@drawable/snowflake2"
         app:AnimNB="400"
-        app:AnimTaille="60dp"
-        app:AnimVitesseMax="60"
+        app:AnimTaille="40dp"
+        app:AnimVitesseMax="80"
         app:AnimVitesseMin="40"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,6 +59,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_settings" />
 
+    <ListView
+        android:id="@+id/lvFichiers"
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:background="#6000"
+        android:focusable="auto"
+        android:focusableInTouchMode="true"
+        android:nextFocusUp="@id/listeApplications"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvMedias"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/secondaryDarkDark"
+        android:drawablePadding="8dp"
+        android:padding="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/primaryDark"
+        app:drawableLeftCompat="@drawable/repertoire"
+        app:layout_constraintBottom_toTopOf="@+id/lvFichiers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
+
     <com.lpi.ecrandaccueil.customviews.ListeApplicationsView
         android:id="@+id/listeApplications"
         android:layout_width="0dp"
@@ -68,6 +95,7 @@
         android:focusedByDefault="true"
         android:longClickable="true"
         android:nextFocusUp="@id/imageButtonSettings"
+        android:nextFocusDown="@id/lvFichiers"
         android:paddingLeft="@dimen/padding"
         android:paddingTop="10dp"
         android:paddingRight="@dimen/padding"
@@ -85,9 +113,11 @@
         app:ListeNbParLigne="4"
         app:ListeRatioSelection="1.08"
         app:ListeTexteCouleur="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvMedias"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

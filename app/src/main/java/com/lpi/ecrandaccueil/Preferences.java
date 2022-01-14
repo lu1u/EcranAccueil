@@ -6,18 +6,17 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.Map;
-
 public class Preferences
 {
-	public static final String PREF_VOLUME = "Volume";
-	public static final String PREF_ANIMATIONS = "Animations";
-	public static final String PREF_NB_ICONES_PAR_RANGEE = "Nb Icones par rangee";
-	private static final String PREFERENCES = Preferences.class.getName();
-	public static final String PREF_DECALAGE = "Decalage";
-	public static final String PREF_NB_LANCEMENTS = "NbLancements ";
-	public static final String PREF_CACHEE = "Cachee ";
-	public static final String SEPARATEUR = " ";
+	@NonNull public static final String PREF_VOLUME = "Volume";
+	@NonNull public static final String PREF_ANIMATIONS = "Animations";
+	@NonNull public static final String PREF_NB_ICONES_PAR_RANGEE = "Nb Icones par rangee";
+	@NonNull public static final String PREF_REPERTOIRE_COURANT = "Repertoire courant";
+	@NonNull private static final String PREFERENCES = Preferences.class.getName();
+	@NonNull public static final String PREF_DECALAGE = "Decalage";
+	@NonNull public static final String PREF_NB_LANCEMENTS = "NbLancements ";
+	@NonNull public static final String PREF_CACHEE = "Cachee ";
+	@NonNull public static final String SEPARATEUR = " ";
 
 	private @Nullable static Preferences _instance;
 	@NonNull final SharedPreferences settings;
